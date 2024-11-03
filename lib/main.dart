@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'views/page_accueil.dart'; // Importez la page d'accueil
+import 'package:provider/provider.dart';
+import 'viewModels/about_you.dart'; // Importez le ViewModel
+import 'views/page_accueil.dart';
+import 'views/about_you.dart';
 
 void main() {
-  runApp(CoachinyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AboutYouViewModel()), // Fournit AboutYouViewModel
+      ],
+      child: CoachinyApp(),
+    ),
+  );
 }
 
 class CoachinyApp extends StatelessWidget {
@@ -11,11 +21,16 @@ class CoachinyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Coachiny',
       theme: ThemeData(
-        primarySwatch: Colors.blue, // Couleur principale pour le thème
-        brightness: Brightness.dark, // Utilisez un thème sombre
+        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
       ),
-      home: PageAccueil(), // Définit la page d'accueil comme page principale
-      debugShowCheckedModeBanner: false, // Supprime l'étiquette "debug" en haut à droite
+      initialRoute: '/',
+      routes: {
+        '/': (context) => PageAccueil(), // Page d'accueil
+        '/aboutYou': (context) => AboutYou(), // Page "About You"
+        // Ajoutez ici d'autres routes si nécessaire
+      },
+      debugShowCheckedModeBanner: false,
     );
   }
 }

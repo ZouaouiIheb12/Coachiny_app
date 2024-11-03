@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../viewmodels/accueil_view_model.dart';
+import 'package:coachiny_app/views/about_you.dart';
 
 class PageAccueil extends StatelessWidget{
    final AccueilViewModel viewModel = AccueilViewModel();
@@ -72,7 +73,10 @@ class PageAccueil extends StatelessWidget{
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  viewModel.onTryNowPressed();
+                    
+                       Navigator.pushNamed(context, '/aboutYou');
+                   
+                      viewModel.onTryNowPressed();
                 },
                 style: ElevatedButton.styleFrom(
                   iconColor: Colors.blue,
