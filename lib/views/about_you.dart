@@ -3,11 +3,10 @@ import 'package:provider/provider.dart';
 import '../models/experience_model.dart';
 import '../viewmodels/about_you.dart';
 
-
 class AboutYou extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<AboutYouViewModel>(context); 
+    final viewModel = Provider.of<AboutYouViewModel>(context);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -24,6 +23,7 @@ class AboutYou extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Titre principal
             Text(
               'About You',
               style: TextStyle(
@@ -33,6 +33,7 @@ class AboutYou extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
+            // Description
             Text(
               'We want to know more about you, follow the next steps to complete the information',
               style: TextStyle(
@@ -41,9 +42,11 @@ class AboutYou extends StatelessWidget {
               ),
             ),
             SizedBox(height: 32),
+            // Liste des options d'expérience
             ExperienceOptions(),
             Spacer(),
-            NavigationButtons(), // Utilisation du widget NavigationButtons ici
+            // Boutons de navigation
+            NavigationButtons(),
           ],
         ),
       ),
@@ -58,13 +61,13 @@ class ExperienceOptions extends StatelessWidget {
     final viewModel = Provider.of<AboutYouViewModel>(context);
 
     return Column(
-      children: viewModel.ExperienceLevels.asMap().entries.map((entry) {
+      children: viewModel.experienceLevels.asMap().entries.map((entry) {
         int idx = entry.key;
         ExperienceLevel experience = entry.value;
         bool isSelected = idx == viewModel.selectedIndex;
 
         return GestureDetector(
-          onTap: () => viewModel.selectedExperience(idx),
+          onTap: () => viewModel.selectExperience(idx),
           child: Container(
             margin: const EdgeInsets.only(bottom: 16),
             padding: const EdgeInsets.all(16),
@@ -100,7 +103,7 @@ class ExperienceOptions extends StatelessWidget {
   }
 }
 
-// Widget NavigationButtons pour les boutons "Retour" et "Suivant"
+// Widget pour les boutons de navigation
 class NavigationButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -111,7 +114,7 @@ class NavigationButtons extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () {
-            Navigator.pop(context); // Bouton Retour
+            Navigator.pop(context); // Bouton "Retour"
           },
           child: Text(
             'Retour',
@@ -122,10 +125,10 @@ class NavigationButtons extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: viewModel.isNextEnabled() // Bouton Suivant
+          onPressed: viewModel.isNextEnabled() // Bouton "Suivant"
               ? () {
-                  // Action pour passer à la prochaine page
-                  Navigator.pushNamed(context, '/nextPage'); // Assurez-vous de définir '/nextPage' dans vos routes
+                  Navigator.pushNamed(
+                      context, '/nextPage'); // Naviguer vers la page suivante
                 }
               : null,
           style: ElevatedButton.styleFrom(
