@@ -1,3 +1,4 @@
+import 'package:coachiny_app/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'viewModels/about_you.dart'; // Importez le ViewModel
@@ -9,7 +10,10 @@ import 'views/login_view.dart';
 import 'views/register_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(
       providers: [

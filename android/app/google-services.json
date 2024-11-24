@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "172802998173",
+    "project_id": "coachiny-3ea54",
+    "storage_bucket": "coachiny-3ea54.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172802998173:android:67df808e06d0e5ad103974",
+        "android_client_info": {
+          "package_name": "com.coachiny.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAiOlF9fcn38tZz900vmuMln-C2khWVTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
