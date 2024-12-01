@@ -1,24 +1,33 @@
 import 'package:coachiny_app/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'viewModels/about_you.dart'; // Importez le ViewModel
 import 'views/page_accueil.dart';
 import 'views/about_you.dart';
 import 'viewmodels/login_view_model.dart';
 import 'viewmodels/register_view_model.dart';
+import 'viewmodels/about_you.dart';
 import 'views/login_view.dart';
 import 'views/register_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialisation Firebase avec gestion des erreurs
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print('Erreur lors de l\'initialisation de Firebase : $e');
+    // Vous pouvez ajouter ici une gestion avancée des erreurs, comme un logger
+  }
+
+  // Lancement de l'application
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (_) => AboutYouViewModel()), // Fournit AboutYouViewModel
+        ChangeNotifierProvider(create: (_) => AboutYouViewModel()),
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
         ChangeNotifierProvider(create: (_) => RegisterViewModel()),
       ],
@@ -38,11 +47,10 @@ class CoachinyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => PageAccueil(), // Page d'accueil
-        '/aboutYou': (context) => AboutYou(), // Page "About You"
-        '/login': (context) => LoginView(), // Route login
+        '/': (context) => PageAccueil(),
+        '/aboutYou': (context) => AboutYou(),
+        '/Login': (context) => LoginView(),
         '/register': (context) => RegisterView(),
-        // Ajoutez ici d'autres routes si nécessaire
       },
       debugShowCheckedModeBanner: false,
     );

@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import '../models/experience_model.dart';
 
-// ViewModel pour gérer la logique de la page "About You"
 class AboutYouViewModel extends ChangeNotifier {
   // Liste des niveaux d'expérience
-  List<ExperienceLevel> _experienceLevels = [
-    ExperienceLevel(
-      title: "I'm Beginner",
-      description: "I have trained several times",
-    ),
-    ExperienceLevel(
-      title: "I'm Expert",
-      description: "I have trained more times",
-    ),
-  ];
+  final List<ExperienceLevel> _experienceLevels;
+
+  AboutYouViewModel()
+      : _experienceLevels = [
+          ExperienceLevel(
+            title: "I'm Beginner",
+            description: "I have trained several times",
+          ),
+          ExperienceLevel(
+            title: "I'm Expert",
+            description: "I have trained more times",
+          ),
+        ];
 
   // Getter pour récupérer les niveaux d'expérience
-  List<ExperienceLevel> get experienceLevels => _experienceLevels;
+  List<ExperienceLevel> get experienceLevels =>
+      List.unmodifiable(_experienceLevels);
 
   // Index de l'expérience sélectionnée
   int _selectedIndex = -1;
@@ -24,12 +27,13 @@ class AboutYouViewModel extends ChangeNotifier {
 
   // Méthode pour sélectionner un niveau d'expérience
   void selectExperience(int index) {
+    if (index < 0 || index >= _experienceLevels.length) {
+      throw ArgumentError("Index out of range");
+    }
     _selectedIndex = index;
     notifyListeners(); // Notifie les widgets écoutant ce ViewModel
   }
 
   // Vérifie si le bouton "Suivant" doit être activé
-  bool isNextEnabled() {
-    return _selectedIndex != -1;
-  }
+  bool get isNextEnabled => _selectedIndex != -1;
 }

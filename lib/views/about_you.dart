@@ -6,8 +6,6 @@ import '../viewmodels/about_you.dart';
 class AboutYou extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<AboutYouViewModel>(context);
-
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -58,47 +56,49 @@ class AboutYou extends StatelessWidget {
 class ExperienceOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<AboutYouViewModel>(context);
+    return Consumer<AboutYouViewModel>(
+      builder: (context, viewModel, _) {
+        return Column(
+          children: viewModel.experienceLevels.asMap().entries.map((entry) {
+            int idx = entry.key;
+            ExperienceLevel experience = entry.value;
+            bool isSelected = idx == viewModel.selectedIndex;
 
-    return Column(
-      children: viewModel.experienceLevels.asMap().entries.map((entry) {
-        int idx = entry.key;
-        ExperienceLevel experience = entry.value;
-        bool isSelected = idx == viewModel.selectedIndex;
-
-        return GestureDetector(
-          onTap: () => viewModel.selectExperience(idx),
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 16),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: isSelected ? Colors.blue : Colors.grey[850],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  experience.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+            return GestureDetector(
+              onTap: () => viewModel.selectExperience(idx),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.blue : Colors.grey[850],
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                SizedBox(height: 4),
-                Text(
-                  experience.description,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      experience.title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      experience.description,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          }).toList(),
         );
-      }).toList(),
+      },
     );
   }
 }
@@ -107,39 +107,41 @@ class ExperienceOptions extends StatelessWidget {
 class NavigationButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<AboutYouViewModel>(context);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context); // Bouton "Retour"
-          },
-          child: Text(
-            'Retour',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
+    return Consumer<AboutYouViewModel>(
+      builder: (context, viewModel, _) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Bouton "Retour"
+              },
+              child: Text(
+                'Retour',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
             ),
-          ),
-        ),
-        ElevatedButton(
-          onPressed: viewModel.isNextEnabled() // Bouton "Suivant"
-              ? () {
-                  Navigator.pushNamed(
-                      context, '/nextPage'); // Naviguer vers la page suivante
-                }
-              : null,
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+            ElevatedButton(
+              onPressed: viewModel.isNextEnabled
+                  ? () {
+                      Navigator.pushNamed(context,
+                          '/nextPage'); // Naviguer vers la page suivante
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: Text('Suivant'),
             ),
-          ),
-          child: Text('Suivant'),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

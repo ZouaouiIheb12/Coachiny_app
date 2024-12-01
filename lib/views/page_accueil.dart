@@ -1,3 +1,4 @@
+// page_accueil.dart
 import 'package:flutter/material.dart';
 import '../viewmodels/accueil_view_model.dart';
 
@@ -67,11 +68,9 @@ class PageAccueil extends StatelessWidget {
               ),
               SizedBox(height: 30),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/aboutYou');
-                },
+                onPressed: () => viewModel.onTryNowPressed(context),
                 style: ElevatedButton.styleFrom(
-                  iconColor: Colors.blue,
+                  backgroundColor: Colors.blue,
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -81,9 +80,8 @@ class PageAccueil extends StatelessWidget {
               ),
               SizedBox(height: 10),
               TextButton(
-                onPressed: () {
-                  viewModel.onLoginPressed();
-                },
+                onPressed: () =>
+                    viewModel.onLoginPressed(context), // Un seul argument
                 child: const Text(
                   'Login',
                   style: TextStyle(
